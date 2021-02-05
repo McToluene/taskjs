@@ -17,7 +17,7 @@ const App = () => {
       <Router>
         <Suspense fallback={<PageLoader color="#3F51B5" visible={true} size={32} />}>
           <Switch>
-            <Route exact path="/home" component={Home} />
+            <Route path="/home" component={Home} />
             <Route exact path="/about" component={About} />
             <Route exact path="/blog" component={Blog} />
             <Route exact path="/contact" component={Contact} />
