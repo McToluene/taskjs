@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, Suspense, lazy } from "react";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import BottomNav from "./organism/BottomNav";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
-function App() {
+import PageLoader from "./atoms/PageLoader";
+
+const Home = lazy(() => import("./pages/Home/Index"));
+const About = lazy(() => import("./pages/About"));
+const Blog = lazy(() => import("./pages/Blog"));
+const Contact = lazy(() => import("./pages/Contact"));
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <CssBaseline />
+      <Router>
+        <Suspense fallback={<PageLoader color="#3F51B5" visible={true} size={32} />}>
+          <Switch>
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/blog" component={Blog} />
+            <Route exact path="/contact" component={Contact} />
+            <Redirect from="/" to="/home" />
+          </Switch>
+        </Suspense>
+        <BottomNav />
+      </Router>
+    </Fragment>
   );
-}
+};
 
 export default App;
